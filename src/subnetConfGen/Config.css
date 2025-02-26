@@ -1,0 +1,17 @@
+p {
+  margin: 0;
+  padding: 0;
+}
+
+
+.InputBox {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+}
+
+.Wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 800px;
+}
