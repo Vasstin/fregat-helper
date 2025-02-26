@@ -66,13 +66,16 @@ const EponConfGen = (props) => {
   }, [epon]);
   let handleEponPort = (event) => {
     setEpon(+event.target.value);
-    // if (onuId.length > 1) {
-    // } else if (onuId.length !== 1) {
-    //   setOnuId(Array.from({ length: 64 }));
-    // }
-    if(onuId.length <= 1){
+    console.log(onuId.length)
+    if (onuId.length > 1) {
+      console.log('in first if')
+    } else if (onuId.length !== 1) {
+      console.log('in second if')
       setOnuId(Array.from({ length: 64 }));
     }
+    // if(onuId.length <= 1){
+    //   setOnuId(Array.from({ length: 64 }));
+    // }
   };
 
   let getOnuId = (event) => {
@@ -88,6 +91,7 @@ const EponConfGen = (props) => {
         newArr.push(Number(item));
       }
     });
+    console.log(onuId.length + " in getonuid")
     arr[0] === "" ? setOnuId(Array.from({ length: 64 })) : setOnuId(newArr);
   };
   return (
