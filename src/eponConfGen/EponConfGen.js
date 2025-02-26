@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import PppoeСonfig from "./PppoeConfig";
+import PppoeConfig from "./PppoeConfig";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
 const EponConfGen = (props) => {
   let [epon, setEpon] = useState(1);
-  const [onuCount, setOnuCount] = useState([]);
+  // const [onuCount, setOnuCount] = useState([]);
   const [onuId, setOnuId] = useState([]);
   const [eponVlan, setEponVlan] = useState(0);
 
@@ -66,7 +66,13 @@ const EponConfGen = (props) => {
   }, [epon]);
   let handleEponPort = (event) => {
     setEpon(+event.target.value);
-    setOnuCount(Array.from({ length: 64 }));
+    // if (onuId.length > 1) {
+    // } else if (onuId.length !== 1) {
+    //   setOnuId(Array.from({ length: 64 }));
+    // }
+    if(onuId.length <= 1){
+      setOnuId(Array.from({ length: 64 }));
+    }
   };
 
   let getOnuId = (event) => {
@@ -82,9 +88,8 @@ const EponConfGen = (props) => {
         newArr.push(Number(item));
       }
     });
-    setOnuId(newArr);
+    arr[0] === "" ? setOnuId(Array.from({ length: 64 })) : setOnuId(newArr);
   };
-  console.log(onuId.length);
   return (
     <div className="CreateConfig">
       <Typography
@@ -143,28 +148,40 @@ const EponConfGen = (props) => {
           />
         </Box>
         <div>
-          {epon === 0 ? (
-            <div></div>
-          ) : onuId.length === 0 || onuId.length === 1 ? (
-            onuCount.map((item, index) => (
-              <PppoeСonfig
-                epon={epon}
-                eponVlan={eponVlan}
-                key={index}
-                count={index + 1}
-                test={"onuCount"}
-              ></PppoeСonfig>
-            ))
-          ) : (
-            onuId.map((item, index) => (
-              <PppoeСonfig
-                epon={epon}
-                eponVlan={eponVlan}
-                key={index}
-                count={item}
-              ></PppoeСonfig>
-            ))
-          )}
+          {
+            epon === 0 ? (
+              <div></div>
+            ) : (
+              onuId.map((item, index) => (
+                <PppoeConfig
+                  epon={epon}
+                  eponVlan={eponVlan}
+                  key={index}
+                  count={item || index + 1}
+                ></PppoeConfig>
+              ))
+            )
+            // onuId.length === 0 || onuId.length === 1 ? (
+            //   onuCount.map((item, index) => (
+            //     <PppoeСonfig
+            //       epon={epon}
+            //       eponVlan={eponVlan}
+            //       key={index}
+            //       count={index + 1}
+            //       test={"onuCount"}
+            //     ></PppoeСonfig>
+            //   ))
+            // ) : (
+            //   onuId.map((item, index) => (
+            //     <PppoeСonfig
+            //       epon={epon}
+            //       eponVlan={eponVlan}
+            //       key={index}
+            //       count={item}
+            //     ></PppoeСonfig>
+            //   ))
+            // )
+          }
         </div>
       </Box>
     </div>
