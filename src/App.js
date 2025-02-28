@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./App.css";
 import VplsConfGen from "./VplsConfGen/VplsConfGen";
-import EponConfGen from "./eponConfGen/EponConfGen";
+import EponConfGen from "./EponConfGen/EponConfGen";
 import SubnetConfGen from "./SubnetConfGen/SubnetConfGen";
 import ReplaceSwitchConfig from "./ReplaceSwitchConfig/ReplaceSwitchConfig";
 import { Routes, Route } from "react-router";
