@@ -3,12 +3,14 @@ import PppoeConfig from "./PppoeConfig";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
 
 const EponConfGen = (props) => {
   let [epon, setEpon] = useState(1);
   // const [onuCount, setOnuCount] = useState([]);
   const [onuId, setOnuId] = useState([]);
   const [eponVlan, setEponVlan] = useState(0);
+  const [isFull, setIsFull] = useState();
 
   useEffect(() => {
     switch (epon) {
@@ -66,16 +68,11 @@ const EponConfGen = (props) => {
   }, [epon]);
   let handleEponPort = (event) => {
     setEpon(+event.target.value);
-    console.log(onuId.length)
+    console.log(onuId.length);
     if (onuId.length > 1) {
-      console.log('in first if')
     } else if (onuId.length !== 1) {
-      console.log('in second if')
       setOnuId(Array.from({ length: 64 }));
     }
-    // if(onuId.length <= 1){
-    //   setOnuId(Array.from({ length: 64 }));
-    // }
   };
 
   let getOnuId = (event) => {
@@ -91,9 +88,14 @@ const EponConfGen = (props) => {
         newArr.push(Number(item));
       }
     });
-    console.log(onuId.length + " in getonuid")
     arr[0] === "" ? setOnuId(Array.from({ length: 64 })) : setOnuId(newArr);
   };
+
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+  const toggleCheckBox = (event) => {
+    setIsFull(event.target.checked);
+  };
+
   return (
     <div className="CreateConfig">
       <Typography
@@ -107,49 +109,64 @@ const EponConfGen = (props) => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          width: "800px",
+          // justifyContent: "space-between",
+          width: "1000px",
         }}
       >
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            marginRight: '20px',
+            width:'50%'
           }}
         >
-          <TextField
-            name="Epon"
-            id="outlined-basic"
-            label="Epon"
-            variant="outlined"
+          <Box
             sx={{
-              marginBottom: "25px",
-              width: "250px",
+              marginRight: "5px",
             }}
-            color="primary"
-            type="number"
-            size="small"
-            onChange={handleEponPort}
-            InputProps={{
-              inputProps: {
-                max: 16,
-                min: 1,
-              },
-            }}
-          />
-          <TextField
-            name="Onu ID"
-            id="outlined-basic"
-            label="Onu ID"
-            variant="outlined"
+          >
+            <Checkbox {...label} onClick={(event) => toggleCheckBox(event)} />
+          </Box>
+          <Box
             sx={{
-              marginBottom: "25px",
-              width: "250px",
+              display: "flex",
+              flexDirection: "column",
             }}
-            color="primary"
-            size="small"
-            onChange={getOnuId}
-          />
+          >
+            <TextField
+              name="Epon"
+              id="outlined-basic"
+              label="Epon"
+              variant="outlined"
+              sx={{
+                marginBottom: "25px",
+                width: "250px",
+              }}
+              color="primary"
+              type="number"
+              size="small"
+              onChange={handleEponPort}
+              InputProps={{
+                inputProps: {
+                  max: 16,
+                  min: 1,
+                },
+              }}
+            />
+            <TextField
+              name="Onu ID"
+              id="outlined-basic"
+              label="Onu ID"
+              variant="outlined"
+              sx={{
+                marginBottom: "25px",
+                width: "250px",
+              }}
+              color="primary"
+              size="small"
+              onChange={getOnuId}
+            />
+          </Box>
         </Box>
         <div>
           {
@@ -162,6 +179,7 @@ const EponConfGen = (props) => {
                   eponVlan={eponVlan}
                   key={index}
                   count={item || index + 1}
+                  fullState={isFull}
                 ></PppoeConfig>
               ))
             )

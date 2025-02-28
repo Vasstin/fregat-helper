@@ -4,6 +4,7 @@ const VplsPortConfGen = (props) => {
   console.log(props.vlanVpls);
   return (
     <div>
+      <br/>
       <p>set interfaces {props.portArray} unit {props.vlanVpls} description {props.vlanVplsName}{props.vlanVpls}</p>
       <p>set interfaces {props.portArray} unit {props.vlanVpls} encapsulation vlan-vpls</p>
       <p>set interfaces {props.portArray} unit {props.vlanVpls} vlan-id {props.vlanVpls}</p>

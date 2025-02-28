@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import VplsPortConfGen from "./VplsPortConfGen";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
-const VplsConfGen = props => {
+const VplsConfGen = (props) => {
   const [portArray, setPortArray] = useState([]);
   const [vlanVpls, setVlanVpls] = useState();
   const [vlanVplsName, setVlanVplsName] = useState();
@@ -9,7 +12,7 @@ const VplsConfGen = props => {
 
   let newArr = [];
   let getVplsVlanPorts = (event) => {
-    let arr = event.target.value.split(" ");
+    let arr = event.split(" ");
     for (let i = 0; i < arr.length; i++) {
       let str = arr[i];
       if (str.slice(0, 2) === "ge" || str.slice(0, 2) === "xe") {
@@ -19,42 +22,87 @@ const VplsConfGen = props => {
     return setPortArray(newArr);
   };
   let getVplsVlanId = (event) => {
-    return setVlanVpls(event.target.value);
+    return setVlanVpls(event);
   };
   let getVplsVlanName = (event) => {
-    return setVlanVplsName(event.target.value);
+    return setVlanVplsName(event);
   };
   let getVplsBrasIp = (event) => {
-    return setVlanVplsBrasIp(event.target.value);
+    return setVlanVplsBrasIp(event);
   };
-  return(
+
+  let nameArray = ["Ports", "VlanName", "VlanID", "Bras IP"];
+
+  let handleChange = (event) => {
+    switch (event.target.name) {
+      case "Ports":
+        getVplsVlanPorts(event.target.value);
+        break;
+      case "VlanName":
+        getVplsVlanName(event.target.value);
+        break;
+      case "VlanID":
+        getVplsVlanId(event.target.value);
+        break;
+      case "Bras IP":
+        getVplsBrasIp(event.target.value);
+        break;
+      default:
+    }
+  };
+  return (
     <div>
-        <p>VPLS</p>
-        <div>
-          <div className="InputBox">
-            <lable for="vplsPort">Ports</lable>
-            <input
-              onChange={(event) => getVplsVlanPorts(event)}
-              id="vplsPort"
-            ></input>
-            <lable for="vplsVlanName">VlanName</lable>
-            <input
-              onChange={(event) => getVplsVlanName(event)}
-              id="vplsVlanName"
-            ></input>
-            <lable for="vplsVlanId">VlanID</lable>
-            <input
-              onChange={(event) => getVplsVlanId(event)}
-              id="vplsVlanId"
-            ></input>
-            <lable for="vplsBrasIp">Bras IP</lable>
-            <input
-              onChange={(event) => getVplsBrasIp(event)}
-              id="vplsBrasIp"
-            ></input>
-          </div>
-          <br></br>
-          <b>Глобальное создание VPLS</b>
+      <Typography
+        variant="h3"
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        VPLS
+      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "1000px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "20px",
+            marginRight: "20px",
+          }}
+        >
+          {nameArray.map((name) => (
+            <TextField
+              sx={{
+                marginBottom: "10px",
+              }}
+              color="primary"
+              name={name}
+              id="outlined-basic"
+              label={name}
+              variant="outlined"
+              size="small"
+              onChange={(event) => handleChange(event)}
+            ></TextField>
+          ))}
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            Create VPLS global
+          </Typography>
           <p>
             set routing-instances {vlanVplsName}
             {vlanVpls} instance-type vpls
@@ -83,16 +131,17 @@ const VplsConfGen = props => {
             set routing-instances {vlanVplsName}
             {vlanVpls} protocols vpls neighbor {vlanVplsBrasIp}
           </p>
-        </div>
-        {portArray.map((port) => (
-          <VplsPortConfGen
-            portArray={port}
-            vlanVpls={vlanVpls}
-            vlanVplsName={vlanVplsName}
-          ></VplsPortConfGen>
-        ))}
-      </div>
-  )
+          {portArray.map((port) => (
+            <VplsPortConfGen
+              portArray={port}
+              vlanVpls={vlanVpls}
+              vlanVplsName={vlanVplsName}
+            ></VplsPortConfGen>
+          ))}
+        </Box>
+      </Box>
+    </div>
+  );
 };
 
 export default VplsConfGen;

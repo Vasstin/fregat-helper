@@ -3,7 +3,6 @@ import Navigation from "./Navigation/Navigation";
 import { Outlet } from "react-router";
 import { Box, styled } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 
 const Layout = (props) => {
   const theme = createTheme({
