@@ -30,7 +30,7 @@ const ReplaceSwitchConfig = (props) => {
           textAlign: "center",
         }}
       >
-        Replace onu config for switch
+        Replace onu config
       </Typography>
       <Box
         sx={{
