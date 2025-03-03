@@ -1,18 +1,27 @@
 import { Box, TextField, Typography } from "@mui/material";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import SwitchConfig from "./SwitchConfig";
 
 const ReplaceSwitchConfig = (props) => {
-  const [serialNumber, setSerivalNumber] = useState();
-  const [onuId, setOnuId] = useState()
+  const [serialNumber, setSerialNumber] = useState();
+  const [onuId, setOnuId] = useState();
+  const [interfaceConfig, setInterfaceConfig] = useState([]);
+  const [ponConfig, setPonConfig] = useState([]);
+  const [interfaceOlt, setInterfaceOlt] = useState();
 
   let handleChange = (event) => {
     let array = event.target.value.split("\n");
     let onuId = array[0].split(":")[1];
-    setOnuId(onuId)
-    console.log(array);
+    let index = array.findIndex((item) => item.startsWith("pon-onu-mng"));
+    let interfaceConfig = array.slice(0, index);
+    let ponConfig = array.slice(index);
+    let interfaceOlt = array[0]?.split("_")[1]?.split(":")[0];
+
+    setOnuId(onuId);
+    setInterfaceConfig(interfaceConfig);
+    setPonConfig(ponConfig);
+    setInterfaceOlt(interfaceOlt);
   };
-  console.log(serialNumber);
   return (
     <Box>
       <Typography
@@ -66,11 +75,17 @@ const ReplaceSwitchConfig = (props) => {
             label="Serial number"
             variant="outlined"
             size="small"
-            onChange={(event) => setSerivalNumber(event.target.value)}
+            onChange={(event) => setSerialNumber(event.target.value)}
           ></TextField>
         </Box>
         <Box>
-          <SwitchConfig serialNumber={serialNumber} onuId={onuId}/>
+          <SwitchConfig
+            serialNumber={serialNumber}
+            onuId={onuId}
+            interfaceConfig={interfaceConfig}
+            ponConfig={ponConfig}
+            interfaceOlt={interfaceOlt}
+          />
         </Box>
       </Box>
     </Box>
