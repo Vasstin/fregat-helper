@@ -5,8 +5,10 @@ import EponConfGen from "./EponConfGen/EponConfGen";
 import SubnetConfGen from "./subnetConfGen/SubnetConfGen";
 import ReplaceSwitchConfig from "./ReplaceSwitchConfig/ReplaceSwitchConfig";
 import L2 from "./L2/L2";
+import OnuConfig from "./OnuConfig/OnuConfig";
 import { Routes, Route } from "react-router";
 import Layout from "./Layout";
+
 function App() {
   return (
     <Routes>
@@ -16,6 +18,7 @@ function App() {
         <Route path="vpls" element={<VplsConfGen />} />
         <Route path="replace-config" element={<ReplaceSwitchConfig />} />
         <Route path="l2" element={<L2 />} />
+        <Route path="onu-config" element={<OnuConfig />} />
       </Route>
     </Routes>
   );

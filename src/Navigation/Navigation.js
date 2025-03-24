@@ -13,7 +13,7 @@ import navLogo from "../img/fregg.png";
 import { Link } from "react-router";
 import styled from "@emotion/styled";
 
-const pages = ["subnet", "epon", "vpls", "replace-config", "l2"];
+const pages = ["subnet", "epon", "vpls", "replace-config", "l2", "onu-config"];
 
 const Navigation = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

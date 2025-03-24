@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 
 const L2Config = (props) => {
+  console.log(props);
   return (
     <Box>
       <b>csw-glk-04</b>
@@ -117,7 +118,7 @@ const L2Config = (props) => {
           <p>switchport vlan {props.configData.Vlan} tag</p>
           <p>exit</p>
           <p>exit</p>
-          <p>wr a</p>
+          <p>wr</p>
         </Box>
       ) : (
         <Box>
@@ -154,7 +155,33 @@ const L2Config = (props) => {
           </p>
           <p>exit</p>
           <p>exit</p>
-          <p>wr</p>
+          <p>wr a</p>
+        </Box>
+      )}
+      <p>---------------------------------------</p>
+      {props.nextHostSwitch === "Edgecore" ? (
+        <Box>
+          <b>Edgecore</b>
+          <p>conf</p>
+          <p>vlan database</p>
+          <p>vlan {props.configData.Vlan} name {props.configData.VlanName}-{props.configData.Vlan} media ethernet</p>
+          <p>exit</p>
+          <p>interface ethernet 1/{props.configData.switchUplink}</p>
+          <p>switchport allowed vlan add {props.configData.Vlan} tagged</p>
+          <p>exit</p>
+          <p>exit</p>
+          <p>copy running-config startup-config</p>
+          <p>exit</p>
+        </Box>
+      ) : (
+        <Box>
+          <b>Dlink</b>
+          <p>enable admin</p>
+          <p>vfnhtyf</p>
+          <p>create vlan {props.configData.VlanName}-{props.configData.Vlan} tag {props.configData.Vlan}</p>
+          <p>config vlan vlanid {props.configData.Vlan} add tagged {props.configData.switchUplink}</p>
+          <p>save</p>
+          <p>logo</p>
         </Box>
       )}
     </Box>

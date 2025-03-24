@@ -11,24 +11,28 @@ const L2 = (props) => {
   let inputCsw = ["VlanName", "Vlan", "Port"];
 
   const [nextHost, setNextHost] = useState();
-  const [configfData, setConfigData] = useState({
-    VlanName: "",
-    Vlan: "",
-    Port: "",
-    brasIp: "",
-    coreIp: "",
-    nextPort: "",
-    upLinkPort: "",
-    onuPort: "",
+  const [nextHostSwitch, setNextHostSwitch] = useState();
+  const [configData, setConfigData] = useState({
+    // VlanName: "",
+    // Vlan: "",
+    // Port: "",
+    // brasIp: "",
+    // coreIp: "",
+    // nextPort: "",
+    // upLinkPort: "",
+    // onuPort: "",
   });
 
   let handleRadio = (event) => {
     setNextHost(event.target.value);
   };
+  let handlRadioSwitch = (event) => {
+    setNextHostSwitch(event.target.value);
+  };
 
   let handleConfigData = (event) => {
     setConfigData({
-      ...configfData,
+      ...configData,
       [event.target.name]:
         event.target.name === "VlanName"
           ? event.target.value[0]?.toUpperCase() === event.target.value[0]
@@ -38,7 +42,6 @@ const L2 = (props) => {
     });
   };
 
-  console.log(configfData);
   return (
     <Box>
       <Typography
@@ -171,7 +174,7 @@ const L2 = (props) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "20px",
+                marginTop: "10px",
                 marginRight: "20px",
                 width: "50%",
               }}
@@ -208,7 +211,7 @@ const L2 = (props) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "20px",
+                marginTop: "10px",
                 marginRight: "20px",
                 width: "50%",
               }}
@@ -228,9 +231,63 @@ const L2 = (props) => {
               ></TextField>
             </Box>
           )}
+          <FormControl>
+            <FormLabel
+              sx={{
+                marginBottom: "10px",
+              }}
+              id="demo-row-radio-buttons-group-label"
+            >
+              Next host, switch
+            </FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              onChange={handlRadioSwitch}
+            >
+              <FormControlLabel
+                value="Edgecore"
+                control={<Radio />}
+                label="Edgecore"
+              />
+              <FormControlLabel
+                value="Dlink"
+                control={<Radio />}
+                label="Dlink"
+              />
+            </RadioGroup>
+          </FormControl>
+          <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                marginTop: "10px",
+                marginRight: "20px",
+                width: "50%",
+              }}
+            >
+              <TextField
+                sx={{
+                  marginBottom: "10px",
+                  width: "250px",
+                }}
+                color="primary"
+                name="switchUplink"
+                id="outlined-basic"
+                label="Switch Uplink"
+                variant="outlined"
+                size="small"
+                onChange={handleConfigData}
+              ></TextField>
+            </Box>
         </Box>
         <Box>
-          <L2Config configData={configfData} nextHost={nextHost}></L2Config>
+          <L2Config
+            configData={configData}
+            nextHost={nextHost}
+            nextHostSwitch={nextHostSwitch}
+          ></L2Config>
         </Box>
       </Box>
     </Box>
