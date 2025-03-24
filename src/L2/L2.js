@@ -73,7 +73,7 @@ const L2 = (props) => {
               marginBottom: "10px",
             }}
           >
-            csw-glk-04
+            csw
           </Typography>
           {inputCsw.map((item, index) => (
             <TextField
@@ -97,7 +97,7 @@ const L2 = (props) => {
               marginTop: "10px",
             }}
           >
-            core-dp-01
+            core
           </Typography>
           <TextField
             sx={{
@@ -112,13 +112,26 @@ const L2 = (props) => {
             size="small"
             onChange={handleConfigData}
           ></TextField>
+          <TextField
+            sx={{
+              marginBottom: "10px",
+              width: "250px",
+            }}
+            color="primary"
+            name="coreIp"
+            id="outlined-basic"
+            label="Core IP"
+            variant="outlined"
+            size="small"
+            onChange={handleConfigData}
+          ></TextField>
           <Typography
             sx={{
               marginBottom: "10px",
               marginTop: "10px",
             }}
           >
-            bras-xx-xx
+            bras
           </Typography>
           {/* <TextField
             sx={{
@@ -192,7 +205,7 @@ const L2 = (props) => {
                 size="small"
                 onChange={handleConfigData}
               ></TextField>
-              <TextField
+              {/* <TextField
                 sx={{
                   marginBottom: "10px",
                   width: "250px",
@@ -204,7 +217,7 @@ const L2 = (props) => {
                 variant="outlined"
                 size="small"
                 onChange={handleConfigData}
-              ></TextField>
+              ></TextField> */}
             </Box>
           ) : (
             <Box

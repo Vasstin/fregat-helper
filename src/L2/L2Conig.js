@@ -5,7 +5,7 @@ const L2Config = (props) => {
   console.log(props);
   return (
     <Box>
-      <b>csw-glk-04</b>
+      <b>csw</b>
       <p>
         create vlan {props.configData.VlanName}-{props.configData.Vlan}
       </p>
@@ -34,7 +34,7 @@ const L2Config = (props) => {
       </p>
       <p>save</p>
       <p>---------------------------------------</p>
-      <b>core-dp-01</b>
+      <b>core</b>
       <p>
         set interfaces xe-0/0/3 unit {props.configData.Vlan} description{" "}
         {props.configData.VlanName}-{props.configData.Vlan}
@@ -69,7 +69,7 @@ const L2Config = (props) => {
         xe-0/0/3.{props.configData.Vlan} ignore-mtu-mismatch
       </p>
       <p>---------------------------------------</p>
-      <b>bras-dp-xx</b>
+      <b>bras</b>
       <p>
         set interfaces {props.configData.nextPort} unit {props.configData.Vlan}{" "}
         description {props.configData.VlanName}-{props.configData.Vlan}
@@ -83,25 +83,25 @@ const L2Config = (props) => {
         vlan-id {props.configData.Vlan}
       </p>
       <p>
-        set protocols l2circuit neighbor 212.115.225.240 interface{" "}
+        set protocols l2circuit neighbor {props.configData.coreIp} interface{" "}
         {props.configData.nextPort}.{props.configData.Vlan} virtual-circuit-id{" "}
         {props.configData.Vlan}
       </p>
       <p>
-        set protocols l2circuit neighbor 212.115.225.240 interface{" "}
+        set protocols l2circuit neighbor {props.configData.coreIp} interface{" "}
         {props.configData.nextPort}.{props.configData.Vlan} no-control-word
       </p>
       <p>
-        set protocols l2circuit neighbor 212.115.225.240 interface{" "}
+        set protocols l2circuit neighbor {props.configData.coreIp} interface{" "}
         {props.configData.nextPort}.{props.configData.Vlan} mtu 9216
       </p>
       <p>
-        set protocols l2circuit neighbor 212.115.225.240 interface{" "}
+        set protocols l2circuit neighbor {props.configData.coreIp} interface{" "}
         {props.configData.nextPort}.{props.configData.Vlan} encapsulation-type
         ethernet-vlan
       </p>
       <p>
-        set protocols l2circuit neighbor 212.115.225.240 interface{" "}
+        set protocols l2circuit neighbor {props.configData.coreIp} interface{" "}
         {props.configData.nextPort}.{props.configData.Vlan} ignore-mtu-mismatch
       </p>
       <p>---------------------------------------</p>

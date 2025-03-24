@@ -10,21 +10,29 @@ import Config from "./Config";
 const OnuConfig = (props) => {
   const [configType, setConfigType] = useState();
   const [configData, setConfigData] = useState({});
+  const [vlan, setVlan] = useState();
 
-  let handleConfigData = (event) => {
-    setConfigData({
-      ...configData,
-      [event.target.name]:
-        event.target.name === "VlanName"
-          ? event.target.value[0]?.toUpperCase() === event.target.value[0]
-            ? event.target.value
-            : event.target.value?.toUpperCase()
-          : event.target.value,
-    });
+  const handleConfigData = (event) => {
+    if (event.target.name === "interface") {
+      let data = event.target.value.split("/")[2].split(":")[0];
+      let vlan = data < 10 ? "80" + data : "8" + data;
+      setVlan(vlan);
+
+      setConfigData({
+        ...configData,
+        [event.target.name]: event.target.value,
+      });
+    } else {
+      setConfigData({
+        ...configData,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
   let handleType = (event) => {
     setConfigType(event.target.value);
   };
+
   return (
     <Box>
       <Typography
@@ -44,7 +52,7 @@ const OnuConfig = (props) => {
       >
         <Box
           sx={{
-            display:'flex',
+            display: "flex",
             flexDirection: "column",
             width: "50%",
           }}
@@ -82,6 +90,19 @@ const OnuConfig = (props) => {
               width: "250px",
             }}
             color="primary"
+            name="desc"
+            id="outlined-basic"
+            label="Description"
+            variant="outlined"
+            size="small"
+            onChange={handleConfigData}
+          ></TextField>
+          <TextField
+            sx={{
+              marginBottom: "10px",
+              width: "250px",
+            }}
+            color="primary"
             name="interface"
             id="outlined-basic"
             label="Interface"
@@ -95,7 +116,7 @@ const OnuConfig = (props) => {
             width: "50%",
           }}
         >
-          <Config configData={configData} configType={configType}/>
+          <Config configData={configData} configType={configType} vlan={vlan} />
         </Box>
       </Box>
     </Box>
