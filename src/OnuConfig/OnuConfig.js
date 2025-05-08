@@ -10,24 +10,48 @@ import Config from "./Config";
 const OnuConfig = (props) => {
   const [configType, setConfigType] = useState();
   const [configData, setConfigData] = useState({});
-  const [vlan, setVlan] = useState();
 
   const handleConfigData = (event) => {
-    if (event.target.name === "interface") {
-      let data = event.target.value.split("/")[2].split(":")[0];
-      let vlan = data < 10 ? "80" + data : "8" + data;
-      setVlan(vlan);
+    const { name, value } = event.target;
 
-      setConfigData({
-        ...configData,
-        [event.target.name]: event.target.value,
-      });
-    } else {
-      setConfigData({
-        ...configData,
-        [event.target.name]: event.target.value,
-      });
+    if (name === "interface") {
+      let obj = {
+        oltInterface: "",
+        id: "",
+        vlan: "",
+      };
+      const underscoreSplit = value.split("_");
+      const slashSplit = value.split("/");
+
+      if (
+        underscoreSplit.length > 1 &&
+        underscoreSplit[1].includes(":") &&
+        slashSplit.length > 2 &&
+        slashSplit[2].includes(":")
+      ) {
+        try {
+          obj.oltInterface = underscoreSplit[1].split(":")[0];
+          obj.id = underscoreSplit[1].split(":")[1];
+          const data = slashSplit[2].split(":")[0];
+          obj.vlan = data < 10 ? "80" + data : "8" + data;
+        } catch (e) {
+          obj.oltInterface = "";
+          obj.id = "";
+          obj.vlan = "";
+        }
+      }
+      for (const prop in obj) {
+        setConfigData((prev) => ({
+          ...prev,
+          [prop]: obj[prop],
+        }));
+      }
     }
+
+    setConfigData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
   let handleType = (event) => {
     setConfigType(event.target.value);
@@ -82,6 +106,11 @@ const OnuConfig = (props) => {
                 control={<Radio />}
                 label="PPPoE"
               />
+              <FormControlLabel
+                value="ZTE_PPPoE"
+                control={<Radio />}
+                label="ZTE_PPPoE"
+              />
             </RadioGroup>
           </FormControl>
           <TextField
@@ -110,13 +139,26 @@ const OnuConfig = (props) => {
             size="small"
             onChange={handleConfigData}
           ></TextField>
+          <TextField
+            sx={{
+              marginBottom: "10px",
+              width: "250px",
+            }}
+            color="primary"
+            name="onu"
+            id="outlined-basic"
+            label="Onu"
+            variant="outlined"
+            size="small"
+            onChange={handleConfigData}
+          ></TextField>
         </Box>
         <Box
           sx={{
             width: "50%",
           }}
         >
-          <Config configData={configData} configType={configType} vlan={vlan} />
+          <Config configData={configData} configType={configType} />
         </Box>
       </Box>
     </Box>
