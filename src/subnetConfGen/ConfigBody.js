@@ -7,7 +7,7 @@ const Config = (props) => {
   return (
     <div className="">
       <pre>
-        {`VID 3060, подсеть ${props.subnetIps.network}/${props.configData.Mask}
+        {`VID ${props.configData.Vlan}, подсеть ${props.subnetIps.network}/${props.configData.Mask}
 Настройки для клиента:
 ip ${props.subnetIps.ipClient}
 mask ${props.subnetIps.mask}
