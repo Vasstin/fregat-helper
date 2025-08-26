@@ -6,7 +6,7 @@ import {
   Radio,
   FormControlLabel,
 } from "@mui/material";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 //b0a8.6ef1.fff0
 const MacChanger = (props) => {
   const [macType, setMacType] = useState();

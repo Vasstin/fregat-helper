@@ -13,7 +13,15 @@ import navLogo from "../img/fregg.png";
 import { Link } from "react-router";
 import styled from "@emotion/styled";
 
-const pages = ["subnet", "epon", "vpls", "replace-config", "l2", "onu-config", "mac-changer"];
+const pages = [
+  "subnet",
+  "epon",
+  "vpls",
+  "replace-config",
+  "l2",
+  "onu-config",
+  "mac-changer",
+];
 
 const Navigation = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -23,7 +31,6 @@ const Navigation = (props) => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  
   const CustomAppBar = styled(AppBar)({
     width: "100%",
     backgroundColor: "#343a40",

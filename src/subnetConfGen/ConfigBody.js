@@ -3,8 +3,19 @@ import { Box } from "@mui/material";
 
 import "./Config.css";
 const Config = (props) => {
+  console.log(props.subnetIps);
   return (
     <div className="">
+      <pre>
+        {`VID 3060, подсеть ${props.subnetIps.network}/${props.configData.Mask}
+Настройки для клиента:
+ip ${props.subnetIps.ipClient}
+mask ${props.subnetIps.mask}
+GW ${props.subnetIps.gateway}
+dns 212.115.255.33
+212.115.255.44`}
+      </pre>
+      <p>---------------------------------------</p>
       <p>
         set interfaces {props.configData.Port} unit {props.configData.Vlan}{" "}
         description {props.configData.VlanName}-{props.configData.Vlan}
@@ -19,7 +30,7 @@ const Config = (props) => {
       </p>
       <p>
         set interfaces {props.configData.Port} unit {props.configData.Vlan}{" "}
-        family inet address {props.configData.Gateway}/{props.configData.Mask}
+        family inet address {props.subnetIps.gateway}/{props.configData.Mask}
       </p>
       <p>---------------------------------------</p>
       {props.nextHost === "Olt" ? (

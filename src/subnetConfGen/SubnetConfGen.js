@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ConfigBody from "./ConfigBody";
 import { Box, TextField, Typography } from "@mui/material";
 
@@ -12,6 +12,13 @@ const SubnetConfGen = (props) => {
   const [nextHostSwitch, setNextHostSwitch] = useState();
   const [configData, setConfigData] = useState({});
   const [nextHost, setNextHost] = useState();
+  const [subnetIps, setSubnetIps] = useState({
+    network: "",
+    firstHost: "",
+    lastHost: "",
+    broadcast: "",
+    mask: "",
+  });
 
   let handleRadio = (event) => {
     setNextHost(event.target.value);
@@ -32,7 +39,43 @@ const SubnetConfGen = (props) => {
     });
   };
 
-  let nameArray = ["Port", "Vlan", "VlanName", "Gateway", "Mask"];
+  function getSubnetInfo(ip, prefix) {
+    const ipToLong = (ip) =>
+      ip.split(".").reduce((acc, octet) => (acc << 8) + parseInt(octet), 0) >>>
+      0;
+
+    const longToIp = (num) =>
+      [24, 16, 8, 0].map((shift) => (num >> shift) & 255).join(".");
+
+    const ipNum = ipToLong(ip);
+    const maskNum = prefix === 0 ? 0 : 0xffffffff << (32 - prefix);
+    const network = ipNum & maskNum;
+    const broadcast = network | (~maskNum >>> 0);
+    // Для маленьких подсетей (/31, /32) first/last совпадают с network/broadcast
+    const gateway = prefix >= 31 ? network : network + 1;
+    const ipClient = prefix >= 31 ? broadcast : broadcast - 1;
+    const maskIp = longToIp(maskNum >>> 0);
+
+    return {
+      network: longToIp(network),
+      gateway: longToIp(gateway),
+      ipClient: longToIp(ipClient),
+      broadcast: longToIp(broadcast),
+      mask: maskIp,
+    };
+  }
+
+  // Пример:
+
+  useEffect(() => {
+    if (configData.Ip && configData.Mask) {
+      const info = getSubnetInfo(configData.Ip, parseInt(configData.Mask));
+      setSubnetIps(info);
+    }
+  }, [configData.Ip, configData.Mask]);
+
+  let nameArray = ["Port", "Vlan", "VlanName", "Ip", "Mask"];
+
   return (
     <Box>
       <Typography
@@ -61,10 +104,10 @@ const SubnetConfGen = (props) => {
         >
           {nameArray.map((item) => (
             <TextField
-            sx={{
-              marginBottom: "10px",
-              width: "250px",
-            }}
+              sx={{
+                marginBottom: "10px",
+                width: "250px",
+              }}
               color="primary"
               key={item}
               name={item}
@@ -228,6 +271,7 @@ const SubnetConfGen = (props) => {
           configData={configData}
           nextHost={nextHost}
           nextHostSwitch={nextHostSwitch}
+          subnetIps={subnetIps}
         />
       </Box>
     </Box>
