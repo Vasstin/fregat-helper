@@ -13,44 +13,53 @@ const MacChanger = (props) => {
   const [mac, setMac] = useState("");
 
   const newMac = useMemo(() => {
-    let cleanMac = mac
+  if (!mac) return "";
+
+  // Разбиваем по пробелам или переносам строк
+  let macList = mac
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  const formatMac = (rawMac) => {
+    let cleanMac = rawMac
       .trim()
       .split("")
       .map((item) => (item === "." || item === ":" || item === "-" ? "" : item))
       .join("")
       .toUpperCase();
+
     if (!macType) return cleanMac;
 
     switch (macType) {
       case "Bdcom":
-        cleanMac = cleanMac
+        return cleanMac
           .split("")
           .map((item, index) =>
             index % 4 === 0 && index !== 0 ? `.${item}` : item
           )
           .join("");
-        break;
       case "Bras":
-        cleanMac = cleanMac
+        return cleanMac
           .split("")
           .map((item, index) =>
             index % 2 === 0 && index !== 0 ? `:${item}` : item
           )
           .join("");
-        break;
       case "Switch":
-        cleanMac = cleanMac
+        return cleanMac
           .split("")
           .map((item, index) =>
             index % 2 === 0 && index !== 0 ? `-${item}` : item
           )
           .join("");
-        break;
       default:
         return cleanMac;
     }
-    return cleanMac;
-  }, [mac, macType]);
+  };
+
+  return macList.map(formatMac).join("\n"); // выводим каждый мак с новой строки
+}, [mac, macType]);
 
   const handleChange = (event) => {
     setMac(event.target.value);
@@ -138,7 +147,11 @@ const MacChanger = (props) => {
             textAlign: "center",
           }}
         >
-          {newMac}
+          {newMac.split("\n").map((line, idx) => (
+  <Typography key={idx} variant="h6" sx={{ textAlign: "center" }}>
+    {line}
+  </Typography>
+))}
         </Typography>
       </Box>
     </Box>
