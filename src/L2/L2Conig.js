@@ -138,7 +138,7 @@ const L2Config = (props) => {
           <p>cmd-sequence 003 epon onu all-port ctc notify loopback</p>
           <p>
             cmd-sequence 004 epon onu all-port mac address-table dynamic maximum
-            2
+            3
           </p>
           <p>
             cmd-sequence 005 epon onu all-port storm-control mode 1 threshold
@@ -164,7 +164,10 @@ const L2Config = (props) => {
           <b>Edgecore</b>
           <p>conf</p>
           <p>vlan database</p>
-          <p>vlan {props.configData.Vlan} name {props.configData.VlanName}-{props.configData.Vlan} media ethernet</p>
+          <p>
+            vlan {props.configData.Vlan} name {props.configData.VlanName}-
+            {props.configData.Vlan} media ethernet
+          </p>
           <p>exit</p>
           <p>interface ethernet 1/{props.configData.switchUplink}</p>
           <p>switchport allowed vlan add {props.configData.Vlan} tagged</p>
@@ -178,8 +181,14 @@ const L2Config = (props) => {
           <b>Dlink</b>
           <p>enable admin</p>
           <p>vfnhtyf</p>
-          <p>create vlan {props.configData.VlanName}-{props.configData.Vlan} tag {props.configData.Vlan}</p>
-          <p>config vlan vlanid {props.configData.Vlan} add tagged {props.configData.switchUplink}</p>
+          <p>
+            create vlan {props.configData.VlanName}-{props.configData.Vlan} tag{" "}
+            {props.configData.Vlan}
+          </p>
+          <p>
+            config vlan vlanid {props.configData.Vlan} add tagged{" "}
+            {props.configData.switchUplink}
+          </p>
           <p>save</p>
           <p>logo</p>
         </Box>
