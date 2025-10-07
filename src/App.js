@@ -7,12 +7,14 @@ import ReplaceSwitchConfig from "./ReplaceSwitchConfig/ReplaceSwitchConfig";
 import MacChanger from "./MacChanger/MacChanger";
 import L2 from "./L2/L2";
 import OnuConfig from "./OnuConfig/OnuConfig";
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom"; 
 import Layout from "./Layout";
+import SignIn from "./components/SignIn";
 
 function App() {
   return (
     <Routes>
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/" element={<Layout />}>
         <Route path="epon" element={<EponConfGen />} />
         <Route path="subnet" element={<SubnetConfGen />} />
@@ -22,6 +24,10 @@ function App() {
         <Route path="onu-config" element={<OnuConfig />} />
         <Route path="onu-config" element={<OnuConfig />} />
         <Route path="mac-changer" element={<MacChanger />} />
+        {/* <Route
+          index
+          element={<div>Добро пожаловать! Выберите инструмент в меню.</div>}
+        /> */}
       </Route>
     </Routes>
   );

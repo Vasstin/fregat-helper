@@ -9,10 +9,11 @@ const Config = (props) => {
       <pre>
         {`VID ${props.configData.Vlan}, подсеть ${props.subnetIps.network}/${props.configData.Mask}
 Настройки для клиента:
-ip ${props.subnetIps.ipClient}
+ip   ${props.subnetIps.ipClient}
 mask ${props.subnetIps.mask}
-GW ${props.subnetIps.gateway}
-dns 
+GW   ${props.subnetIps.gateway}
+dns  212.115.255.33
+     212.115.255.44
 `}
       </pre>
       <p>---------------------------------------</p>

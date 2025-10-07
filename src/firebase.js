@@ -1,8 +1,7 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth"; // <-- добавляем
+import { getAuth } from "firebase/auth";
 
+// Your Firebase config here
 const firebaseConfig = {
   apiKey: "AIzaSyBwsX0TVVIur43A6cbHtZxTTrWYXaVDfPs",
   authDomain: "fregat-helper.firebaseapp.com",
@@ -11,12 +10,9 @@ const firebaseConfig = {
   messagingSenderId: "713616299733",
   appId: "1:713616299733:web:3749cfbbcab76769ec345c",
   measurementId: "G-EDN23ZPLRW",
-};
+}
 
-// Инициализация Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = getAuth(app);
 
-// Инициализация Firebase Auth
-export const auth = getAuth(app); // <-- экспортируем auth
-export default app;
+export default auth;
