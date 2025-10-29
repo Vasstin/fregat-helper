@@ -86,13 +86,14 @@ dns  212.115.255.33
             256
           </p>
           <p>cmd-sequence 006 epon fec enable</p>
+          <p>cmd-sequence 007 epon onu desc {props.configData.VlanName}-{props.configData.Vlan}</p>
           <p>
-            cmd-sequence 007 epon sla upstream pir{" "}
+            cmd-sequence 008 epon sla upstream pir{" "}
             {props.configData.speed * 1024} cir{" "}
             {props.configData.speed <= 5 ? 1024 : 5000}
           </p>
           <p>
-            cmd-sequence 008 epon sla downstream pir{" "}
+            cmd-sequence 009 epon sla downstream pir{" "}
             {props.configData.speed * 1024} cir{" "}
             {props.configData.speed <= 5 ? 1024 : 5000}
           </p>
