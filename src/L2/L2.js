@@ -12,6 +12,7 @@ const L2 = (props) => {
 
   const [nextHost, setNextHost] = useState();
   const [nextHostSwitch, setNextHostSwitch] = useState();
+  const [l2Provider, setL2Provider] = useState();
   const [configData, setConfigData] = useState({
     // VlanName: "",
     // Vlan: "",
@@ -28,6 +29,9 @@ const L2 = (props) => {
   };
   let handlRadioSwitch = (event) => {
     setNextHostSwitch(event.target.value);
+  };
+  let handleL2Provider = (event) => {
+    setL2Provider(event.target.value);
   };
 
   let handleConfigData = (event) => {
@@ -75,6 +79,30 @@ const L2 = (props) => {
           >
             csw
           </Typography>
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              onChange={handleL2Provider}
+            >
+              <FormControlLabel
+                value="DataGroup"
+                control={<Radio />}
+                label="DataGroup"
+              />
+              <FormControlLabel
+                value="Gigatrans"
+                control={<Radio />}
+                label="Gigatrans"
+              />
+              <FormControlLabel
+                value="Omega"
+                control={<Radio />}
+                label="Omega"
+              />
+            </RadioGroup>
+          </FormControl>
           {inputCsw.map((item, index) => (
             <TextField
               sx={{
@@ -91,6 +119,7 @@ const L2 = (props) => {
               onChange={handleConfigData}
             ></TextField>
           ))}
+
           <Typography
             sx={{
               marginBottom: "10px",
@@ -99,6 +128,19 @@ const L2 = (props) => {
           >
             core
           </Typography>
+          <TextField
+            sx={{
+              marginBottom: "10px",
+              width: "250px",
+            }}
+            color="primary"
+            name="core_port"
+            id="outlined-basic"
+            label="Core port"
+            variant="outlined"
+            size="small"
+            onChange={handleConfigData}
+          ></TextField>
           <TextField
             sx={{
               marginBottom: "10px",
@@ -272,34 +314,35 @@ const L2 = (props) => {
             </RadioGroup>
           </FormControl>
           <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "10px",
+              marginRight: "20px",
+              width: "50%",
+            }}
+          >
+            <TextField
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                marginTop: "10px",
-                marginRight: "20px",
-                width: "50%",
+                marginBottom: "10px",
+                width: "250px",
               }}
-            >
-              <TextField
-                sx={{
-                  marginBottom: "10px",
-                  width: "250px",
-                }}
-                color="primary"
-                name="switchUplink"
-                id="outlined-basic"
-                label="Switch Uplink"
-                variant="outlined"
-                size="small"
-                onChange={handleConfigData}
-              ></TextField>
-            </Box>
+              color="primary"
+              name="switchUplink"
+              id="outlined-basic"
+              label="Switch Uplink"
+              variant="outlined"
+              size="small"
+              onChange={handleConfigData}
+            ></TextField>
+          </Box>
         </Box>
         <Box>
           <L2Config
             configData={configData}
             nextHost={nextHost}
             nextHostSwitch={nextHostSwitch}
+            l2Provider={l2Provider}
           ></L2Config>
         </Box>
       </Box>
